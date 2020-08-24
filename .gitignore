@@ -1,0 +1,7 @@
+train
+test
+dataset
+*.png
+*.csv
+*.zip
+*.pdf
