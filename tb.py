@@ -13,61 +13,33 @@ from keras.optimizers import Adam
 #CNN
 conv_base = VGG16(weights='imagenet',
     include_top=False,
-    input_shape=(448, 448, 3))
+    input_shape=(224, 224, 3))
 conv_base.trainable = False
-
+#conv_base.summary()
 model = Sequential()
 model.add(conv_base)
-'''
-model.add(Conv2D(32, kernel_size=(3,3), activation='relu', input_shape=(448,448,3)))
-model.add(Conv2D(64,(3,3), activation='relu'))
-model.add(MaxPool2D(pool_size=(2,2)))
-model.add(Dropout(0.25))
 
-model.add(Conv2D(64,(3,3), activation='relu'))
-model.add(MaxPool2D(pool_size=(2,2)))
-model.add(Dropout(0.25))
-
-model.add(Conv2D(128,(3,3),activation='relu'))
-model.add(MaxPool2D(pool_size=(2,2)))
-model.add(Dropout(0.25))
-'''
 model.add(Flatten())
-model.add(Dense(256, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.5))
+
 model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(1,activation='sigmoid'))
 
-model.compile(loss=keras.losses.binary_crossentropy, optimizer=Adam(lr=0.001), metrics=['accuracy'])
+model.compile(loss=keras.losses.binary_crossentropy, optimizer=Adam(lr=0.0001), metrics=['accuracy'])
 
 model.summary()
 
 #training
-training_set = image.ImageDataGenerator(
-    rescale = 1./255,
-    horizontal_flip = True,
-    rotation_range=50,
-    featurewise_center = True,
-    featurewise_std_normalization = True,
-    width_shift_range=0.2,
-    height_shift_range=0.2,
-    shear_range=0.25,
-    zoom_range=0.1,
-    zca_whitening = True,
-    channel_shift_range = 20,
-    vertical_flip = True ,
-    validation_split = 0.2,
-    fill_mode='constant'
+training_set = image.ImageDataGenerator(preprocessing_function=keras.applications.vgg16.preprocess_input,validation_split = 0.2,)
+
+test_set = image.ImageDataGenerator(preprocessing_function=keras.applications.vgg16.preprocess_input,
+rescale=1./255
 )
-test_set = image.ImageDataGenerator(rescale=1./255)
 
 train_generator = training_set.flow_from_directory(
     'dataset',
-    target_size = (448,448),
-    batch_size = 32,
+    target_size = (224,224),
+    batch_size = 64,
     subset= 'training',
     seed=45,
     shuffle = True,
@@ -76,7 +48,7 @@ train_generator = training_set.flow_from_directory(
 print(train_generator.class_indices)
 
 valid_generator = training_set.flow_from_directory('dataset',
-    target_size= (448,448),
+    target_size= (224,224),
     shuffle=True,
     batch_size=10,
     subset = 'validation',
@@ -84,12 +56,17 @@ valid_generator = training_set.flow_from_directory('dataset',
     class_mode='binary',
  )
 
+my_callbacks = [
+    keras.callbacks.EarlyStopping(patience=5, monitor='accuracy'),
+]
+
 trained_model = model.fit(
     train_generator,
     steps_per_epoch=8,
     epochs = 10,
     validation_data = valid_generator,
-    validation_steps = 5
+    validation_steps = 5,
+    callbacks=my_callbacks
     )
 
 model.save('tb_keras.h5')
