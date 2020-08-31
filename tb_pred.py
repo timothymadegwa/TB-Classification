@@ -1,7 +1,7 @@
 import keras
 from keras.models import load_model
 from keras.preprocessing import image
-import numpy as np
+import pandas as pd
 from keras import backend as K
 
 tb_model = load_model('tb_keras.h5')
@@ -19,5 +19,12 @@ test_generator = test_set.flow_from_directory(
 )
 
 ans = tb_model.predict(test_generator)
-#print(test_generator)
+print(ans)
+
+submission = pd.read_csv('SampleSubmission.csv')
+
+submission = submission.sort_values(by='ID')
+submission.LABEL = ans
+#print(submission.head())
+submission.to_csv('submission.csv', index=False, sep=',')
 

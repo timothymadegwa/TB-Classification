@@ -65,7 +65,7 @@ my_callbacks = [
 trained_model = model.fit(
     train_generator,
     steps_per_epoch=8,
-    epochs = 10,
+    epochs = 20,
     #validation_data = valid_generator,
     validation_steps = 5,
     callbacks=my_callbacks
