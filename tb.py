@@ -30,7 +30,9 @@ model.compile(loss=keras.losses.binary_crossentropy, optimizer=Adam(lr=0.0001), 
 model.summary()
 
 #training
-training_set = image.ImageDataGenerator(preprocessing_function=keras.applications.vgg16.preprocess_input,validation_split = 0.2,)
+training_set = image.ImageDataGenerator(preprocessing_function=keras.applications.vgg16.preprocess_input,
+#validation_split = 0.2,
+)
 
 test_set = image.ImageDataGenerator(preprocessing_function=keras.applications.vgg16.preprocess_input,
 rescale=1./255
@@ -46,7 +48,7 @@ train_generator = training_set.flow_from_directory(
     class_mode = 'binary'
 )
 print(train_generator.class_indices)
-
+'''
 valid_generator = training_set.flow_from_directory('dataset',
     target_size= (224,224),
     shuffle=True,
@@ -54,7 +56,7 @@ valid_generator = training_set.flow_from_directory('dataset',
     subset = 'validation',
     seed=42,
     class_mode='binary',
- )
+ )'''
 
 my_callbacks = [
     keras.callbacks.EarlyStopping(patience=5, monitor='accuracy'),
@@ -64,7 +66,7 @@ trained_model = model.fit(
     train_generator,
     steps_per_epoch=8,
     epochs = 10,
-    validation_data = valid_generator,
+    #validation_data = valid_generator,
     validation_steps = 5,
     callbacks=my_callbacks
     )
