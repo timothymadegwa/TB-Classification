@@ -8,6 +8,7 @@ from keras.layers import Activation, Conv2D, MaxPool2D, Dropout
 from keras.layers.core import Dense, Flatten
 from keras.preprocessing import image
 from keras.optimizers import Adam
+import matplotlib.pyplot as plt
 
 
 #CNN
@@ -20,9 +21,9 @@ model = Sequential()
 model.add(conv_base)
 
 model.add(Flatten())
-
 model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.5))
+
 model.add(Dense(1,activation='sigmoid'))
 
 model.compile(loss=keras.losses.binary_crossentropy, optimizer=Adam(lr=0.0001), metrics=['accuracy'])
@@ -34,9 +35,6 @@ training_set = image.ImageDataGenerator(preprocessing_function=keras.application
 #validation_split = 0.2,
 )
 
-test_set = image.ImageDataGenerator(preprocessing_function=keras.applications.vgg16.preprocess_input,
-rescale=1./255
-)
 
 train_generator = training_set.flow_from_directory(
     'dataset',
@@ -59,21 +57,43 @@ valid_generator = training_set.flow_from_directory('dataset',
  )'''
 
 my_callbacks = [
-    keras.callbacks.EarlyStopping(patience=5, monitor='accuracy'),
+    keras.callbacks.EarlyStopping(patience=4, monitor='accuracy'),
 ]
 
 trained_model = model.fit(
     train_generator,
     steps_per_epoch=8,
-    epochs = 20,
+    epochs = 7,
     #validation_data = valid_generator,
-    validation_steps = 5,
+    #validation_steps = 5,
     callbacks=my_callbacks
     )
 
 model.save('tb_keras.h5')
 
 model.save_weights('tb_keras_weights.h5')
+'''
+# list all data in history
+print(trained_model.history.keys())
+# summarize history for accuracy
+plt.plot(trained_model.history['accuracy'])
+plt.plot(trained_model.history['val_accuracy'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.show()
+plt.savefig('accuracy.png')
+
+# summarize history for loss
+plt.plot(trained_model.history['loss'])
+plt.plot(trained_model.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.show()
+plt.savefig('loss.png')
 
 #class activation maps
-#grad-CAM
+#grad-CAM'''
