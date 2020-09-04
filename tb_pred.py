@@ -4,7 +4,7 @@ from keras.preprocessing import image
 import pandas as pd
 from keras import backend as K
 
-tb_model = load_model('tb_keras.h5')
+tb_model = load_model('best_model.h5')
 print(tb_model.summary())
 
 
@@ -19,7 +19,7 @@ test_generator = test_set.flow_from_directory(
 )
 
 ans = tb_model.predict(test_generator)
-print(ans)
+#print(ans)
 
 submission = pd.read_csv('SampleSubmission.csv')
 

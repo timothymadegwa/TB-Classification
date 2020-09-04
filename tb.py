@@ -8,7 +8,6 @@ from keras.layers import Activation, Conv2D, MaxPool2D, Dropout
 from keras.layers.core import Dense, Flatten
 from keras.preprocessing import image
 from keras.optimizers import Adam
-import matplotlib.pyplot as plt
 
 
 #CNN
@@ -17,11 +16,12 @@ conv_base = VGG16(weights='imagenet',
     input_shape=(224, 224, 3))
 conv_base.trainable = False
 #conv_base.summary()
+
 model = Sequential()
 model.add(conv_base)
 
 model.add(Flatten())
-model.add(Dense(64, activation='relu'))
+model.add(Dense(32, activation='relu'))
 model.add(Dropout(0.5))
 
 model.add(Dense(1,activation='sigmoid'))
@@ -32,7 +32,7 @@ model.summary()
 
 #training
 training_set = image.ImageDataGenerator(preprocessing_function=keras.applications.vgg16.preprocess_input,
-#validation_split = 0.2,
+validation_split = 0.2,
 )
 
 
@@ -46,7 +46,7 @@ train_generator = training_set.flow_from_directory(
     class_mode = 'binary'
 )
 print(train_generator.class_indices)
-'''
+
 valid_generator = training_set.flow_from_directory('dataset',
     target_size= (224,224),
     shuffle=True,
@@ -54,24 +54,25 @@ valid_generator = training_set.flow_from_directory('dataset',
     subset = 'validation',
     seed=42,
     class_mode='binary',
- )'''
+ )
 
 my_callbacks = [
     keras.callbacks.EarlyStopping(patience=4, monitor='accuracy'),
+    keras.callbacks.ModelCheckpoint(filepath='model32.{epoch:02d}-{val_accuracy:.2f}.h5'),
 ]
 
 trained_model = model.fit(
     train_generator,
     steps_per_epoch=8,
-    epochs = 7,
-    #validation_data = valid_generator,
-    #validation_steps = 5,
+    epochs = 10,
+    validation_data = valid_generator,
+    validation_steps = 5,
     callbacks=my_callbacks
     )
 
-model.save('tb_keras.h5')
+#model.save('tb_keras.h5')
 
-model.save_weights('tb_keras_weights.h5')
+#model.save_weights('tb_keras_weights.h5')
 '''
 # list all data in history
 print(trained_model.history.keys())
