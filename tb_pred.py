@@ -4,7 +4,7 @@ from keras.preprocessing import image
 import pandas as pd
 from keras import backend as K
 
-tb_model = load_model('best_model.h5')
+tb_model = load_model('deployment/best_model.h5')
 print(tb_model.summary())
 
 
@@ -26,5 +26,5 @@ submission = pd.read_csv('SampleSubmission.csv')
 submission = submission.sort_values(by='ID')
 submission.LABEL = ans
 #print(submission.head())
-submission.to_csv('submission.csv', index=False, sep=',')
+submission.to_csv('submission2.csv', index=False, sep=',')
 

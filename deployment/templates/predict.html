@@ -1,0 +1,104 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+        <style>
+            .bd-placeholder-img {
+              font-size: 1.125rem;
+              text-anchor: middle;
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+            }
+      
+            @media (min-width: 768px) {
+              .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+              }
+            }
+          </style>
+
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-light fixed-top">
+            <a class="navbar-brand" href="#">
+            <img src="../static/images/aqila.png" width="50" height="50" alt="" loading="lazy">
+            </a>
+        </nav>
+        <div class="container"><br><br><br><br><br>
+            <div class="row">
+                <div class="col-lg-3">
+
+                </div>
+                <div class="col-lg-6">
+                    <h3>SCAN YOUR CHEST X-RAY</h3><br>
+                    <form class="form-signin" action="{{  url_for('predict') }}" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="xray">Select a chest X-ray <em>(only .png, .jpg or .jpeg)</em></label><br>
+                            <input type="file" class="form-control-file" name="xray" id="xray" accept=".png,.jpg,.jpeg" required>
+                        </div><br>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-info btn-lg text-center col-md-8">Predict</button>
+                        </div>
+                    </form>
+                    {%if text %}
+                    <div class="container">
+                        <p>There is a {{ text }} % chance that the patient is Positive for TB</p>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-3">
+
+                </div>
+            </div>
+        </div>
+    </body>
+     <!-- Footer -->
+<footer class="page-footer font-large special-color-dark pt-4 fixed-bottom bg-light" >
+
+    <!-- Footer Elements -->
+    <div class="container">
+  
+      <!-- Social buttons -->
+      <ul class="list-unstyled list-inline text-center" >
+        <li class="list-inline-item">
+          <a class="btn-floating btn-li mx-1" href="https://www.linkedin.com/company/aqila/" target="_blank" style="color: black" >
+            <i class="fab fa-linkedin-in fa-lg"> </i>
+          </a>
+        </li>
+        
+        <li class="list-inline-item">
+          <a class="btn-floating btn-tw mx-1" href="mailto:info@aqila.co.ke" target="_blank" style="color: black">
+            <i class="far fa-envelope fa-lg"> </i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+            <a class="btn-floating btn-tw mx-1" href="https://aqila.co.ke" target="_blank" style="color: black">
+                <i class="fas fa-globe fa-lg"></i>
+            </a>
+          </li>
+        
+        <li class="list-inline-item">
+          <a class="btn-floating btn-gplus mx-1" style="color: black" href="tel:+254724245620" style="color: black">
+            <i class="fas fa-phone-square fa-lg"> +254 724 245 620 </i>
+          </a>
+        </li>
+        
+      </ul>
+      <!-- Social buttons -->
+  
+    </div>
+    <!-- Footer Elements -->
+  
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020<a href="https://aqila.co.ke" target="_blank"> Aqila Software Limited.</a> All Rights Reserved
+    </div>
+    <!-- Copyright -->
+  
+  </footer>
+</html>
