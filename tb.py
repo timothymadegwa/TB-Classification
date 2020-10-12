@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as pyplot
 import keras
 from keras import backend as K
-from keras.models import Sequential
+from keras.models import Sequential, Model
 from keras.applications import VGG16
 from keras.layers import Activation, Conv2D, MaxPool2D, Dropout
 from keras.layers.core import Dense, Flatten
@@ -16,7 +16,14 @@ conv_base = VGG16(weights='imagenet',
     input_shape=(224, 224, 3))
 conv_base.trainable = False
 #conv_base.summary()
+x = Flatten()(conv_base.output)
+x = Dense(64, activation='relu')(x)
+x = Dropout(0.5)(x)
+x = Dense(1, activation='sigmoid')(x)
 
+model = Model(conv_base.input, x)
+
+'''
 model = Sequential()
 model.add(conv_base)
 
@@ -25,6 +32,7 @@ model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.5))
 
 model.add(Dense(1,activation='sigmoid'))
+'''
 
 model.compile(loss=keras.losses.binary_crossentropy, optimizer=Adam(lr=0.0001), metrics=['accuracy'])
 
@@ -64,7 +72,7 @@ my_callbacks = [
 trained_model = model.fit(
     train_generator,
     steps_per_epoch=8,
-    epochs = 6,
+    epochs = 15,
     #validation_data = valid_generator,
     #validation_steps = 5,
     callbacks=my_callbacks
