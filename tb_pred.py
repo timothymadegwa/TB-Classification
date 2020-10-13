@@ -4,7 +4,7 @@ from keras.preprocessing import image
 import pandas as pd
 from keras import backend as K
 
-tb_model = load_model('model.15-0.95.h5')
+tb_model = load_model('model.13-0.92.h5')
 print(tb_model.summary())
 
 
