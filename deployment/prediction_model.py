@@ -1,4 +1,5 @@
 import base64
+import os
 import numpy as np
 import pandas as pd
 import io
@@ -66,11 +67,13 @@ def predict():
         #print(processed_image.mean(axis=(0,1), dtype='float64'))
         pred = model.predict(processed_image)
         context = float("{:.3f}".format(pred[0][0]*100))
+        if os.path.exists(img.filename):
+            os.remove(img.filename)
+        else:
+            print("The file does not exist")
         return render_template('predict.html', text=context)
     else:
         return render_template('predict.html')
-    
-    return render_template('predict.html')
 
 
 if __name__ == "__main__":
