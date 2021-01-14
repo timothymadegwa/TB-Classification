@@ -69,8 +69,7 @@ def predict():
         context = float("{:.3f}".format(pred[0][0]*100))
         if os.path.exists(img.filename):
             os.remove(img.filename)
-        else:
-            print("The file does not exist")
+
         return render_template('predict.html', text=context)
     else:
         return render_template('predict.html')
