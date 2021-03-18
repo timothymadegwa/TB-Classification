@@ -62,7 +62,7 @@ def predict():
         img = request.files['xray']
         img.save(img.filename)
         image = Image.open(img.filename)
-        print(np.asarray(image).mean(axis=(0,1)))
+        #print(np.asarray(image).mean(axis=(0,1)))
         processed_image = preprocess_image(image, size=(224,224))
         #print(processed_image.mean(axis=(0,1), dtype='float64'))
         pred = model.predict(processed_image)
