@@ -3,6 +3,7 @@
 ### PROJECT OVERVIEW  
 The TB-Classification application is an Tuberculosis X-Ray scanning application that returns the probability of a scan (X-Ray) having Tuberculosis.
 The model was trained using Keras (VGG16 pre-trained model) and obtained an accuracy of about 92% on the test set (during training)
+The Project is not currently hosted but here is a short video on it functionality on YouTube (https://youtu.be/-ax5aX80li0)
 
 
  
