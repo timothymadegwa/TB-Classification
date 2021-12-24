@@ -19,12 +19,12 @@ test_generator = test_set.flow_from_directory(
 )
 
 ans = tb_model.predict(test_generator)
-#print(ans)
+
 
 submission = pd.read_csv('SampleSubmission.csv')
 
 submission = submission.sort_values(by='ID')
 submission.LABEL = ans
-#print(submission.head())
+
 submission.to_csv('submission.csv', index=False, sep=',')
 

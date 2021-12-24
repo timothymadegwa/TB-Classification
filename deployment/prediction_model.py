@@ -6,9 +6,9 @@ import io
 from PIL import Image
 import keras
 from keras import backend as K
-from keras.models import Sequential, load_model
-from keras.preprocessing.image import ImageDataGenerator, img_to_array
-from flask import Flask, request, jsonify, render_template
+from keras.models import load_model
+from keras.preprocessing.image import img_to_array
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
@@ -29,8 +29,8 @@ def preprocess_image(image, size):
 
 get_model()
 
-
-#@app.route('/batch')
+'''
+@app.route('/batch')
 def batch_prediction():
     names = pd.read_csv('../Test.csv')
     names = names.sort_values(by='ID')
@@ -49,11 +49,10 @@ def batch_prediction():
     names = names.drop('filename', axis=1)
 
     names.to_csv('submission2.csv', index=False, sep=',')
-    batch_prediction()
 
-    #return render_template('predict.html')
+    return render_template('predict.html')
 
-
+'''
 
 
 @app.route('/predict', methods=['POST','GET'])
@@ -62,9 +61,8 @@ def predict():
         img = request.files['xray']
         img.save(img.filename)
         image = Image.open(img.filename)
-        #print(np.asarray(image).mean(axis=(0,1)))
         processed_image = preprocess_image(image, size=(224,224))
-        #print(processed_image.mean(axis=(0,1), dtype='float64'))
+        
         pred = model.predict(processed_image)
         context = float("{:.3f}".format(pred[0][0]*100))
         if os.path.exists(img.filename):
@@ -77,4 +75,3 @@ def predict():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
