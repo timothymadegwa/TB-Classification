@@ -13,7 +13,7 @@ The Project is not currently hosted but here is a short video on it functionalit
 > git clone the repo  
 > python3 -m venv ./venv  (Create venv)  
 > pip install -r requirements.txt (Install python packages)  
-> cd deplpyment
+> cd deployment
 > python prediction_model.py
 
 ### DATA
