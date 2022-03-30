@@ -31,11 +31,3 @@ The backend was built on python Flask due to its simple nature (only one page to
 
 #### Trade-offs
 The major trade-off for this project is that the VGG16 model is quite heavy. Should I have more time on it, I would like to explore the use of other pre-trained models such as Mobilenet
-
-#### Personal Profile
-I have an online resume (https://timdev.co.ke/) containing links to works I have completed before (code cannot be shared) under the projects page
-
-#### Other projects
-1. Kopapap (https://kopapap-api.herokuapp.com/). This is a POC for the use of machine learning as an extra layer of screening before a loan is issues. It is built using Flask, HTML, CSS and Bootstrap
-2. S-BOB (https://sbob.aqila.co.ke/). An application used to digitize credit union operations. It allows peer-to-peer payment, loan application and disbursment, airtime purchase among others. It is bult on Django, HTML, CSS, Bootstrap and JavaScript. Test login details are available on my public resume
-3. Aqila Inventory (https://inventory.aqila.co.ke/). An application to help small businesses manage thier inventory, make sales and see thier profits. It is built on Django, HTML, CSS, Bootstrap and JavaScript. Test login details are available on my public resume
